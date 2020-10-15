@@ -36,8 +36,8 @@ return [
     'mailers' => [
         'mailgun' => [
             'transport' => 'mailgun',
-            'domain' => 'sandbox41c924d9e320414fa195818c127620cc.mailgun.org',
-            'secret' => '6d39491ced2550faf6a20cf0181db8c6-2fbe671d-cae3fcfa', //2fbe671d-cae3fcfa
+            'domain' => env('MAIL_DOMAIN'),
+            'secret' => env('MAIL_SECRET') 
         ],
     ],
 
