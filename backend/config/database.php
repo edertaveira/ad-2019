@@ -34,22 +34,20 @@ return [
     */
 
     'connections' => [
-        
+
         'mongodb' => [
             'driver' => 'mongodb',
-            'dns' => env('MONGODB_URI'),
             'database' => env('DB_DATABASE', 'amigosecreto'),
-
-            // 'host' => env('DB_HOST', '127.0.0.1'),
-            // 'port' => env('DB_PORT', 27017),
-            // 'username' => env('DB_USERNAME', ''),
-            // 'password' => env('DB_PASSWORD', ''),
-            // 'options' => [
-            //     // here you can pass more settings to the Mongo Driver Manager
-            //     // see https://www.php.net/manual/en/mongodb-driver-manager.construct.php under "Uri Options" for a list of complete parameters that you can use
-        
-            //     //'database' => env('DB_AUTHENTICATION_DATABASE', 'admin'), // required with Mongo 3+
-            // ],
+            'host' => env('DB_HOST') ?  explode(",", env('DB_HOST')) : '127.0.0.1',
+            'port' => env('DB_PORT', 27017),
+            'username' => env('DB_USERNAME', ''),
+            'password' => env('DB_PASSWORD', ''),
+            'options' => env('APP_ENV') === "production" ? [
+                'replicaSet' => 'cluster0-shard-0',
+                'ssl' => 'true',
+                'authSource' => 'admin',
+                'retryWrites' => 'true',
+            ] : [],
         ],
 
     ],
@@ -84,7 +82,7 @@ return [
 
         'options' => [
             'cluster' => env('REDIS_CLUSTER', 'redis'),
-            'prefix' => env('REDIS_PREFIX', Str::slug(env('APP_NAME', 'laravel'), '_').'_database_'),
+            'prefix' => env('REDIS_PREFIX', Str::slug(env('APP_NAME', 'laravel'), '_') . '_database_'),
         ],
 
         'default' => [
