@@ -50,8 +50,8 @@ class UserController extends Controller
     {
         try {
             $input = $this->validateUser($request);
-            $user = $this->saveUser(new User, $input);
-            return response()->json(['success' => true, 'user' => $user]);
+            $result = $this->saveUser(new User, $input);
+            return $result;
         } catch (Exception $e) {
             return response()->json(['error' => $e->getMessage()], $e->getCode());
         }
@@ -85,8 +85,8 @@ class UserController extends Controller
             $input = $this->validateUser($request);
             $user = User::find($id);
             if ($user) {
-                $this->saveUser($user, $input);
-                return response()->json(["success" => true, "user" => $user]);
+                $result = $this->saveUser($user, $input);
+                return $result;
             }
             return  response()->json(["success" => false, "message" => "Usuário inexistente"]);
         } catch (Exception $e) {
