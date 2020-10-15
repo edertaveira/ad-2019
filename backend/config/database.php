@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Support\Str;
-var_dump(explode(",", env('DB_HOST')));
+
 return [
 
     /*
@@ -35,24 +35,17 @@ return [
 
     'connections' => [
 
-        // 'mongodb' => [
-        //     'driver' => 'mongodb',
-        //     'database' => env('DB_DATABASE', 'amigosecreto'),
-        //     'host' => env('DB_HOST') ?  explode(",", env('DB_HOST')) : '127.0.0.1',
-        //     'port' => env('DB_PORT', 27017),
-        //     'username' => env('DB_USERNAME', ''),
-        //     'password' => env('DB_PASSWORD', ''),
-        //     'options' => env('APP_ENV') === "production" ? [
-        //         'replicaSet' => 'cluster0-shard-0',
-        //         'ssl' => 'true',
-        //         'authSource' => 'admin',
-        //         'retryWrites' => 'true',
-        //     ] : [],
-        // ],
-
-        'mongodb' => [
+        'mongodb' => env('APP_ENV') === "local" ? [
             'driver' => 'mongodb',
-            'dsn'=> env("MONGODB_URI"),
+            'database' => env('DB_DATABASE', 'amigosecreto'),
+            'host' => env('DB_HOST', '127.0.0.1'),
+            'port' => env('DB_PORT', 27017),
+            'username' => env('DB_USERNAME', ''),
+            'password' => env('DB_PASSWORD', ''),
+            'options' => [],
+        ] : [
+            'driver' => 'mongodb',
+            'dsn' => env("MONGODB_URI"),
             'database' => env("DB_DATABASE", "amigosecreto"),
         ]
 
