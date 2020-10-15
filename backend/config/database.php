@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Support\Str;
-
+var_dump(explode(",", env('DB_HOST')));
 return [
 
     /*
