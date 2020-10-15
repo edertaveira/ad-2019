@@ -67,47 +67,67 @@ const Home = () => {
   ];
 
   async function doRaffle() {
-    if (users.length > 0) {
-      setLoadingRaffle(true);
-      const res = await axios.get(`${process.env.REACT_APP_API}/raffle`);
-      if (res.data.success) message.success("Sorteio Realizado e enviado parao email!", 10);
-      else message.error("Erro Inesperado! Tente Novamente mais tarde.");
-      setLoadingRaffle(false);
-    } else {
-      message.error("Não há usuários para sorteio");
+    setLoadingRaffle(true);
+    try {
+      if (users.length > 0) {
+        const res = await axios.get(`${process.env.REACT_APP_API}/raffle`);
+        if (res.data.success) message.success("Sorteio Realizado e enviado parao email!", 10);
+        else message.error("Erro Inesperado! Tente Novamente mais tarde.");
+      } else {
+        message.error("Não há usuários para sorteio");
+      }
+    } catch (e) {
+      console.error(e);
+      message.error("Não foi possível realizar o sorteio.");
     }
+    setLoadingRaffle(false);
   }
 
   async function deleteUser(id) {
-    const res = await axios.delete(`${process.env.REACT_APP_API}/user/${id}`);
-    if (res.data.success) {
-      message.success("Usuário Deletado!");
-      getUsers();
-    } else if (res.data.message) {
-      message.error(res.data.message);
+    try {
+      const res = await axios.delete(`${process.env.REACT_APP_API}/user/${id}`);
+      if (res.data.success) {
+        message.success("Usuário Deletado!");
+        getUsers();
+      } else if (res.data.message) {
+        message.error(res.data.message);
+      }
+    } catch (e) {
+      console.error(e);
+      message.error("Não foi possível deletar o usuário.");
     }
   }
 
   async function editUser(user, id) {
     setLoadingSave(true);
-    const res = await axios.put(`${process.env.REACT_APP_API}/user/${id}`, user);
-    if (res.data.success) {
-      message.success("Usuário Deletado!");
-      setVisible(false);
-      getUsers();
-    } else if (res.data.message) {
-      message.error(res.data.message);
+    try {
+      const res = await axios.put(`${process.env.REACT_APP_API}/user/${id}`, user);
+      if (res.data.success) {
+        message.success("Usuário Deletado!");
+        setVisible(false);
+        getUsers();
+      } else if (res.data.message) {
+        message.error(res.data.message);
+      }
+    } catch (e) {
+      console.error(e);
+      message.error("Não foi possível editar o usuário.");
     }
     setLoadingSave(false);
   }
 
   async function storeUser(user) {
     setLoadingSave(true);
-    const res = await axios.post(`${process.env.REACT_APP_API}/user/store`, user);
-    if (res.data.success) {
-      message.success("Usuário Cadastrado!");
-      setVisible(false);
-      getUsers();
+    try {
+      const res = await axios.post(`${process.env.REACT_APP_API}/user/store`, user);
+      if (res.data.success) {
+        message.success("Usuário Cadastrado!");
+        setVisible(false);
+        getUsers();
+      }
+    } catch (e) {
+      console.error(e);
+      message.error("Não foi possível cadastrar o usuário.");
     }
     setLoadingSave(false);
   }
