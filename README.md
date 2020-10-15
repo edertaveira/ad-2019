@@ -21,6 +21,14 @@ MAIL_SECRET=
 MAIL_DOMAIN=
 ```
 
+Em caso de produção insira no `.env` da seguinte forma:
+```
+MONGODB_URI=
+#Dados do MailGUN
+MAIL_SECRET=
+MAIL_DOMAIN=
+```
+
 
 ### Setup
 * ```composer install```
