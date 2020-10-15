@@ -16,7 +16,11 @@ DB_PORT=27017
 DB_DATABASE=amigosecreto
 DB_USERNAME=
 DB_PASSWORD=
+#Dados do MailGUN
+MAIL_SECRET=
+MAIL_DOMAIN=
 ```
+
 
 ### Setup
 * ```composer install```
